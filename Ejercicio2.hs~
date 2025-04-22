@@ -21,13 +21,19 @@ Pasar funcion con los valores de las variables, constantes o funciones
 Pero como??
 -}
 
+--Funcion para recibir una interpretacion
+recibirInterpretacion:: [Pred, Bool] -> Bool
+--asignar de cada par ordenado de literales, el valor booleano para la formula ya descompuesta
+recibirInterpretacion [xs:s] = asignacion s 
+
+
 --Funcion para verificar si una interpretacion satisface una formula
 intepretacion:: Pred -> Bool
 intepretacion pred
 	      | asignacion pred == True = True
 	      | otherwise = False
 
---Funcion para separar formulas a atomicas y asignarles un valor
+--Funcion para separar formulas a atomicas y asignarles (verdadero o falso dada la interpretacion) )un valor
 asignacion:: Pred -> Bool
 asignacion (Atom v) = _ 
 asignacion (No p) =  _
