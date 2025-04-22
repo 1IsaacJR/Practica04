@@ -1,11 +1,7 @@
 --Ejercicio 1
 
 {-
--- Que se quiere hacer
--- estructura de los predicados (como árboles de expresiones),
---o su significado funcional (evaluación con funciones de verdad).?
-
-
+Conceptos a evaluar
 Logica de primer orden
 --Objetos
 --Relaciones
@@ -16,6 +12,7 @@ Logica de primer orden
 -- Declaramos un tipo de universo
 data Universo = cualquiercosa
 
+--Se define un tipo de universo que se ocupara despues 
 P:: Universo -> Bool
 P x 
   | x == "_" = True
@@ -25,14 +22,14 @@ P x
 -}
 
 --Tipo de dato de logica de primer orden
-data Pred = Atom (Exp) -- Probar con Atom Universo (Universo -> Bool)
-          | Disy Pred Pred
-          | Conj Pred Pred
-	  | Imp Pred Pred
-	  | No Pred
-          | Forallx Pred
-          | Existx Pred
-  deriving (Eq, Show)
+data Pred = Atomo (Exp)
+  	   | Conjuncion Pred Pred 
+  	   | Disyuncion Pred Pred
+	   | Implicacion Pred Pred
+	   | Negacion Pred
+  	   | ParaTodo Pred 
+  	   | Existe Pred
+   deriving (Eq,Show)  
   
 --Funcion que evalua un argumento atomico
 data Exp = Lit String -- Tomando un aliteral
@@ -53,25 +50,18 @@ y = Var "y"
 
 -- Predicados atómicos usando Fun
 amigoDe :: Exp -> Exp -> Pred
-amigoDe a b = Atom (Fun [Lit "amigoDe", a, b])
+amigoDe a b = Atomo (Fun [Lit "amigoDe", a, b])
 
 feliz :: Exp -> Pred
-feliz a = Atom (Fun [Lit "feliz", a])
+feliz a = Atomo (Fun [Lit "feliz", a])
+
+
 
 --Ejemplo que implica todos los predicados anteriores
-
 ejemploPred :: Pred
-ejemploPred = Existx (
-                 Conj
-                   (amigoDe x juan)
-                   (Forallx (
-                      Imp
-                        (amigoDe y x)
-                        (feliz y)
-                   ))
-               )
+ejemploPred = Existe (Conjuncion(amigoDe x juan)(ParaTodo (Implicacion(amigoDe y x)(feliz y))))
 
--- Función principal
+-- Main de ejecucion
 main :: IO ()
 main = do
     print ejemploPred  

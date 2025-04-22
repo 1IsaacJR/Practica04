@@ -23,7 +23,7 @@ type Indice = [Int]
 
 --Se define el tipo de dato de la variable
 data Variable = Variable Nombre Indice
-     deriving (Eq, Ord, Show)
+     deriving (Eq, Ord, Generic, Show)
 
 --Definir un tipo de asignacion
 type Asignacion a = Variable -> a
@@ -90,13 +90,13 @@ interpretacion1 "P" [x] = x == leon
 interpretacion1 "Q" [x] = x == cocodrilo 
 interpretacion1 _ _ = True
 
---Definimos una de las segundas interpretaciones que me arroja 
+--Definimos una de las segundas interpretaciones que me arroja False
 interpretacion2 :: String -> [Animal] -> Bool
 interpretacion2 "P" [x] = x == leon 
 interpretacion2 "Q" [x] = x == tigre 
 interpretacion2 _ _ = False
 
---Definimos una de las terceras interpretaciones que me pueda arrojar 
+--Definimos una de las terceras interpretaciones que me pueda arrojar True
 interpretacion3 :: String -> [Animal] -> Bool
 interpretacion3 "P" [x] = x == Leon
 interpretacion3 _ _ = False
